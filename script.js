@@ -1,5 +1,5 @@
 function computerPlay() {
-    let num = Math.floor(Math.random * 3);
+    let num = Math.floor(Math.random() * 3);
     switch (num) {
         case 0:
             return "Rock";
@@ -14,6 +14,7 @@ function computerPlay() {
             break;
 
         default:
+            return "ERROR";
             break;
     }
 }
