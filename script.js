@@ -50,4 +50,60 @@ function playRound(playerSelection, computerSelection) {
         console.log(`Computer won! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})`);
         return winner;
     }    
-  }
+}
+
+function game() {
+
+    let computerScore = 0;
+    let playerScore = 0;
+
+    for (let i = 0; i < 5; i++) {
+
+        let playerSelection = prompt("Your selection: ");
+        let computerSelection = computerPlay();
+
+        switch (playRound(playerSelection, computerSelection)) {
+
+            case "player":
+                playerScore++;
+                console.log(`Player ${playerScore} - Computer ${computerScore}`);
+                break;
+
+            case "computer":
+                computerScore++;
+                console.log(`Player ${playerScore} - Computer ${computerScore}`);
+                break;
+
+            case "tie":
+                console.log(`Player ${playerScore} - Computer ${computerScore}`);
+                break;
+
+            default:
+                break;
+        }        
+    }
+
+    switch (true) {
+        
+        case playerScore > computerScore:
+            console.log("You won the game!!!");
+            return "player";
+            break;
+        
+        case computerScore > playerScore:
+            console.log("Computer won the game!");
+            return "computer";
+            break;
+
+        case playerScore === computerScore:
+            console.log("The game is drawn");
+            return "tie";
+            break;
+    
+        default:
+            break;
+    }
+
+}
+
+game();
