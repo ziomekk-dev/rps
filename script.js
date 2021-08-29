@@ -25,13 +25,19 @@ function computerPlay() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection, playerScore, computerScore) {
+
+
+    const display = document.querySelector("#display");
+    const p = document.createElement("p");
     
     let winner;
 
     if (playerSelection.toUpperCase()  === computerSelection.toUpperCase()) {
         winner = "tie";
-        console.log(`You tied! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})`);
+        
+        p.textContent = `You tied! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})` + `       Player ${playerScore} - Computer ${computerScore}`;
+        display.appendChild(p);
         return winner;
 
     } else if ((playerSelection.toUpperCase() === "ROCK" && computerSelection.toUpperCase() === "SCISSORS") ||
@@ -39,7 +45,9 @@ function playRound(playerSelection, computerSelection) {
                (playerSelection.toUpperCase() === "SCISSORS" && computerSelection.toUpperCase() === "PAPER")) {
     
         winner = "player";
-        console.log(`You won! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})`);
+        playerScore++;
+        p.textContent = `You won! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})` + `       Player ${playerScore} - Computer ${computerScore}`;
+        display.appendChild(p);
         return winner;
 
     } else if ((computerSelection.toUpperCase() === "ROCK" && playerSelection.toUpperCase() === "SCISSORS") ||
@@ -47,7 +55,9 @@ function playRound(playerSelection, computerSelection) {
                (computerSelection.toUpperCase() === "SCISSORS" && playerSelection.toUpperCase() === "PAPER")) {
 
         winner = "computer";
-        console.log(`Computer won! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})`);
+        computerScore++;
+        p.textContent = `Computer won! (${capitalize(playerSelection)} vs ${capitalize(computerSelection)})` + `       Player ${playerScore} - Computer ${computerScore}`;
+        display.appendChild(p);
         return winner;
     }    
 }
@@ -56,10 +66,10 @@ function game() {
 
     let computerScore = 0;
     let playerScore = 0;
+    
 
     for (let i = 0; i < 5; i++) {
 
-        let playerSelection = prompt("Your selection: ");
         let computerSelection = computerPlay();
 
         switch (playRound(playerSelection, computerSelection)) {
@@ -106,4 +116,30 @@ function game() {
 
 }
 
-game();
+let computerScore = 0;
+let playerScore = 0;
+
+const buttons = document.querySelectorAll(".button");
+const display = document.querySelector("#display");
+
+buttons.forEach(function(button) {
+    button.addEventListener("click", () => {
+
+        let winner = playRound(button.value, computerPlay(), playerScore, computerScore);
+
+        switch (winner) {
+            case "player":
+                playerScore++;
+                break;
+            case "computer":
+                computerScore++;
+                break;
+            case "tie":
+            
+                break;
+            default:
+                break;
+        }
+    });
+});
+
